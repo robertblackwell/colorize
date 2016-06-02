@@ -19,7 +19,9 @@ void pipe_reader_dump(pipe_reader_t pr){
 */
 pipe_reader_t pipe_reader_create(int fd, pipe_reader_write_func f){
 	struct pipe_reader_s *tmp = malloc(sizeof(struct pipe_reader_s));
+#ifdef DEBUG	
 	printf("pipe_reader_create fd: %d  malloc: %x  write_f: %x\n", fd, (int)tmp, (int)f);
+#endif
 	tmp->fd 			= fd;
 	tmp->write_f 		= f;
 	tmp->read_lines_f	= &pipe_reader_read_lines;
@@ -39,7 +41,9 @@ void pipe_reader_read_lines(pipe_reader_t pr)
 	FILE 	*stream;
 	int 	c;
 	int		fd = pr->fd;
+#ifdef DEBUG	
 	printf("pipe_reader_read_lines pr: %lx write_f : %lx\n",(long)pr, (long)pr->write_f);
+#endif
 	stream = fdopen (fd, "r");
 	while ((c = getline(&buf_ptr, &count, stream)) != EOF){
 		// pipe_reader_write_line(buf_ptr, count);

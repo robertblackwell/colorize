@@ -3,6 +3,17 @@
 
 #include <pthread.h>
 #include "pipe_reader.h"
+/*
+* This class monitors the read end of a pipe. 
+* It creates a pthread which reads lines from that pipe and passes
+* those lines onto a function -- write_f 
+*
+* The reading from the pipe is accomplised via an instance of
+* the pipe_reader class.
+*
+* The primary function of this class is the firing up of the pthread
+*/
+
 
 struct monitor_s;
 typedef struct monitor_s *monitor_t;

@@ -1,17 +1,18 @@
 # hellomake: fe.c pipe_reader.h pipe_reader.c
 # 	gcc -o fe fe.c -I.
 	
-HEADERS = pipe_reader.h monitor.h
-OBJECTS = pipe_reader.o fe.o monitor.o
+HEADERS = pipe_reader.h monitor.h runner.h color.h formatter.h
+OBJECTS = pipe_reader.o colorize.o monitor.o runner.o color.o formatter.o
+TARGET=colorize
 
-default: fe
+default: $(TARGET)
 
 %.o: %.c $(HEADERS)
 	gcc -c $< -o $@
 
-fe: $(OBJECTS)
+$(TARGET): $(OBJECTS)
 	gcc $(OBJECTS) -o $@
 
 clean:
 	-rm -f $(OBJECTS)
-	-rm -f fe	
+	-rm -f $(TARGET)	

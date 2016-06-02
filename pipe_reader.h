@@ -4,6 +4,11 @@
 #include <pthread.h>
 #include "pipe_reader.h"
 
+/*
+* This class reads lines from a pipe and passes thse lines onto 
+* a callback function named -- write_f
+*/
+
 struct pipe_reader_s;
 typedef struct pipe_reader_s *pipe_reader_t;
 typedef void (*pipe_reader_write_func)(char* buf_ptr, int count);
