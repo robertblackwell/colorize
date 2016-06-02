@@ -178,8 +178,6 @@ main (void)
 		** Close write end of these two pipes first. 
 		*/
 		close (stdout_pipe[1]); close (stderr_pipe[1]);
-#define MONITOR_ON 1		
-#ifdef MONITOR_ON		
 		monitor_t out_monitor = monitor_create(stdout_pipe[0], &write_out_line);
 		monitor_t err_monitor = monitor_create(stderr_pipe[0], &write_err_line);
 #ifdef DEBUG		
@@ -190,24 +188,6 @@ main (void)
 		monitor_start(err_monitor);
 		pthread_join(monitor_get_thread(out_monitor), NULL);
 		pthread_join(monitor_get_thread(err_monitor), NULL);
-#else
-		pipe_reader_t out_reader = pipe_reader_create(stdout_pipe[0], &write_line);
-		pipe_reader_t err_reader = pipe_reader_create(stderr_pipe[0], &write_line);
-#ifdef DEBUG		
-		pipe_reader_dump(out_reader);
-		pipe_reader_dump(err_reader);
-#endif		
-		pthread_cond_init(&cv, NULL);
-		pthread_t o_thread;
-		pthread_t e_thread;
-		int rc1 = pthread_create(&o_thread, NULL, stdout_thread, (void*)out_reader  );
-		int rc2 = pthread_create(&e_thread, NULL, stderr_thread, (void*)err_reader  );
-		pthread_join(o_thread, NULL);
-		pthread_join(e_thread, NULL);
-		// read_from_pipe (stdout_pipe[0]);
-		// close (stdout_pipe[0]);
-		// write_to_pipe (stdout_pipe[1]);
-#endif
 		return EXIT_SUCCESS;
 	}
 }
