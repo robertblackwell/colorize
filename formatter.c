@@ -31,7 +31,6 @@ void formatter_format_stderr_line(formatter_t fmt, char* buf_ptr, int count)
 }
 void formatter_format_status_line(formatter_t fmt, int status)
 {
-	printf("child process status code : %d \n", status);
 	if( status == 0 ){
 		char* msg;
 		char* txt1 = color_text(fmt->cmd, ANSI_COLOR_CYAN);
